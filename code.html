@@ -63,25 +63,70 @@
                 <div class="col-lg-8">
                     <pre class="line-numbers">
                         <code class="language-javascript">
-                            //Call hello world
-                            function HelloWorld(){
-                            alert("hello world");
+                            function getValue(){
+                                //set alert to invisible in case multiple uses happen
+                                document.getElementById("alert").classList.add("invisible");
+                                //get value from input with id "userInput"
+                                let str = document.getElementById("userInput").value;
+                                //create a version of the input in lower case without special characters
+                                let lowerCase = str.toLowerCase();
+                                let cleanStr = lowerCase.replace(/[^a-zA-Z]/g, "");
+                                //pass the cleanStr to the logic function to check if input was palindrome
+                                let isPalindrome = palindromeCheck(cleanStr);
+                                // pass boolean and cleaned input reversed into display function to build proper display
+                                let reverseStr = cleanStr.split("").reverse().join("");
+                                display(isPalindrome, reverseStr);
+                            }
+                            
+                            function palindromeCheck(str){
+                                //reverse cleaned string that was passed in
+                                let reverseStr = str.split("").reverse().join("");
+                                //use an if statement to return a boolean if the string is a palindrome
+                                if (str == reverseStr){
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                            
+                            function display(p, o){
+                                //check boolean that was passed and build inner html of the alert according to the argument passed in. 
+                                if (p){
+                                    document.getElementById("alertHeading").innerHTML = `Well done! You entered a palindrome!`;
+                                    document.getElementById("alertBody").innerHTML = `Your phrase reversed is ${o}`;
+                                    document.getElementById("alert").classList.remove("invisible");
+                                } else {
+                                    document.getElementById("alertHeading").innerHTML = `Uh Oh!`;
+                                    document.getElementById("alertBody").innerHTML = `Your phrase is NOT a palindrome!`;
+                                    document.getElementById("alert").classList.remove("invisible");
+                                }
                             }
                         </code>
                     </pre>
                 </div>
                 <div class="col-lg-4">
                     <h4 class="border-bottom mb-3">Code explanation below.</h4>
-                    <h5>getValues()</h5>
-                    <p>The code is broken into separate functions to divide the necessary steps before bringing them back together to display the result onto the page.</p>
-                    <p>The getValues( ) function starts and ends the entire process. Starting by identifying what the user-entered start and end values are, converting them to integers and then validating the data before passing it on to the next step.</p>
+                    <h5>getValue()</h5>
+                    <p>
+                        The get value function starts by making sure the alert container that displays the end result is set to invisible in case there are multiple uses of the application. It then retrieves the value from the input and removes all special characters. It also creates a reversed version of the input with no special characters for later use in the display function. 
+                    </p>
+                    <p>
+                        The string with no special characters is passed as an argument into the logic function which returns a boolean. 
+                        That boolean is passed in as an argument into the display function along with the reversed string with no special characters. 
+                    </p>
 
-                    <h5>generateNumbers()</h5>                    
-                    <p>The generateNumbers( ) function creates an array with every number integer from the start value to the end value (inclusive) and then passes it to the final step.</p>
+                    <h5>palindromeCheck()</h5>                    
+                    <p>
+                        This is the logic function that takes in the users string cleaned of all special characters and creates a reversed version to check for equality. If they are equal the function returns true. If they are not equal it returns false. 
+                    </p>
 
-                    <h5>displayNumbers()</h5>
-                    <p>The displayNumbers( ) function iterates through the array that is passed in. On each iteration it assigns a "class" variable either an even or odd value depending on if the current value in the array that is being accessed is even or odd.</p>
-                    <p>Then it injects the currently accessed number and its corresponding class into the table to be displayed. From here we access the injected class in CSS to change the font-weight to bold for every even value.</p>
+                    <h5>display()</h5>
+                    <p>
+                        The display function takes the boolean from the logic function and a reversed version of the input string as arguments. If true is passed in then it injects an alert header letting the user know that their input is a palindrome and injects the reversed version of their input with any special characters removed into the alert body with a message.
+                    </p>
+                    <p>
+                        If false is passed in then it creates the same alert, but this time letting the user know that their input is not a palindrome.
+                    </p>
                     
                 </div>
             </div>
